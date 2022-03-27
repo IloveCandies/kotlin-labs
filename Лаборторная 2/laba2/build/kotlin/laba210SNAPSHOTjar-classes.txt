@@ -1,0 +1,1 @@
+/home/maksim/IdeaProjects/laba2/build/classes/kotlin/main/Contact$$serializer.class:/home/maksim/IdeaProjects/laba2/build/classes/kotlin/main/Contact$Companion.class:/home/maksim/IdeaProjects/laba2/build/classes/kotlin/main/Contact.class:/home/maksim/IdeaProjects/laba2/build/classes/kotlin/main/MobilePhone.class
