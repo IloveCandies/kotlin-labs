@@ -36,6 +36,7 @@ class  MainController{
             return null
         }
     }
+
     @RequestMapping("/find/{todo}/{name}",method = [RequestMethod.GET])
     fun findItem(@PathVariable("todo") todo:String,@PathVariable("name") name:String): JsonElement? {
         if(toDoList.getName() == (todo)) {
@@ -62,6 +63,40 @@ class  MainController{
         if (toDoList.getName() == (todo)) {
             toDoList.deleteItem(name)
             println( toDoList.returnItems()+" !create")
+            return encodeToJsonElement(serializer(),toDoList)
+        }
+        else {
+            return null
+        }
+    }
+
+    @RequestMapping("/delete/{todo}/remove-all",method = [RequestMethod.DELETE])
+    fun removeAllItems(@PathVariable("todo") todo:String,@PathVariable("name") name:String): JsonElement? {
+        if (toDoList.getName() == (todo)) {
+            toDoList.deleteAllItems()
+            println( toDoList.returnItems()+" !deleteAll")
+            return encodeToJsonElement(serializer(),toDoList)
+        }
+        else {
+            return null
+        }
+    }
+    @RequestMapping("/delete/{todo}/remove-active",method = [RequestMethod.DELETE])
+    fun removeActiveItems(@PathVariable("todo") todo:String,@PathVariable("name") name:String): JsonElement? {
+        if (toDoList.getName() == (todo)) {
+            toDoList.deleteAllItems()
+            println( toDoList.returnItems()+" !deleteAll")
+            return encodeToJsonElement(serializer(),toDoList)
+        }
+        else {
+            return null
+        }
+    }
+    @RequestMapping("/delete/{todo}/remove-done",method = [RequestMethod.DELETE])
+    fun removeDoneItems(@PathVariable("todo") todo:String,@PathVariable("name") name:String): JsonElement? {
+        if (toDoList.getName() == (todo)) {
+            toDoList.deleteDoneItems()
+            println( toDoList.returnItems()+" !deleteAll")
             return encodeToJsonElement(serializer(),toDoList)
         }
         else {
