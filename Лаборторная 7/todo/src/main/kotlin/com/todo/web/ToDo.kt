@@ -4,6 +4,9 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 class ToDo (private var name: String = "default", private var toDoList: MutableList<ToDoItem> = mutableListOf(), private var tagList: MutableList<ToDoTagItem> = mutableListOf()){
+    fun getName(): String {
+        return name
+    }
     fun addItem(item: ToDoItem): Boolean = toDoList.add(item)
     fun deleteItem(description: String):Boolean=toDoList.removeIf { it.description.equals(description) }
     fun deleteActiveItems(): Boolean = toDoList.removeIf { it.status.equals(Status.ACTIVE) }
@@ -40,6 +43,9 @@ class ToDo (private var name: String = "default", private var toDoList: MutableL
         for (tag in tagList){
             println(tag.toString())
         }
+    }
+    fun returnItems(): MutableList<ToDoItem>{
+        return toDoList
     }
     fun addTag(tag: ToDoTagItem): Boolean = tagList.add(tag)
 
