@@ -10,19 +10,19 @@ class ToDo (private var toDoList: MutableList<ToDoItem> = mutableListOf(), priva
     fun deleteDoneItems(): Boolean = toDoList.removeIf { it.status.equals(Status.DONE) }
     fun deleteAllItems() = toDoList.clear()
     fun findItem(description: String): ToDoItem? = toDoList.find{it.description.equals(description)}
-    fun changeItemStatus(description: String, status: Status): Boolean {
+    fun changeItemStatus(description: String, newStatus: Status): Boolean {
         var item = findItem(description)
         if (item != null) {
-            toDoList.set(toDoList.indexOf(item),item.apply{this.status.equals(status)})
+            toDoList.set(toDoList.indexOf(item),ToDoItem(item.description,newStatus))
             return true
         }
         else
             return false
     }
-    fun changeItemDescription(oldDescription: String, newDescription: String, status: Status): Boolean {
+    fun changeItemDescription(oldDescription: String, newDescription: String, newStatus: Status): Boolean {
         var item = findItem(oldDescription)
         if (item != null) {
-            toDoList.set(toDoList.indexOf(item),item.apply{this.description == newDescription})
+            toDoList.set(toDoList.indexOf(item),ToDoItem(newDescription,newStatus))
             return true
         }
         else
