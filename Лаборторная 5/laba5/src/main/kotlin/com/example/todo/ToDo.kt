@@ -1,7 +1,5 @@
 package com.example.todo
 
-import Status
-import ToDoItem
 
 class ToDo (private var toDoList: MutableList<ToDoItem> = mutableListOf(), private var tagList: MutableList<Tag> = mutableListOf()){
     fun addItem(item: ToDoItem): Boolean = toDoList.add(item)
@@ -45,11 +43,58 @@ class ToDo (private var toDoList: MutableList<ToDoItem> = mutableListOf(), priva
     fun findTag(tagName: String): Tag? = tagList.find{it.name.equals(tagName)}
     fun deleteTag(tagName: String):Boolean {
         var tag = findTag(tagName)
-        if (tagName != null) {
+        if (tag != null){
             tagList.remove(tag)
             return true
         }
-        else
-            return false
+        else  return false
+    }
+    fun addSubItem(itemDescription: String, subItem: ToDoItem) : Boolean {
+        var item  = findItem(itemDescription)
+        if (item != null){
+            item.subItem.add(subItem)
+            return true
+        }
+        else return false
+    }
+    fun addSubTag(itemName: String, subTag: Tag) : Boolean {
+        var item  = findItem(itemName)
+        if (item != null){
+            item.tag.add(subTag)
+            return true
+        }
+        else return false
+    }
+    fun addSubDocument(itemName: String, subDocument: Document ) : Boolean {
+        var item  = findItem(itemName)
+        if (item != null){
+            item.document.add(subDocument)
+            return true
+        }
+        else return false
+    }
+    fun removeSubItem(itemDescription: String, subItem: ToDoItem) : Boolean {
+        var item  = findItem(itemDescription)
+        if (item != null){
+            item.subItem.remove(subItem)
+            return true
+        }
+        else return false
+    }
+    fun removeSubTag(itemName: String, subTag: Tag) : Boolean {
+        var item  = findItem(itemName)
+        if (item != null){
+            item.tag.remove(subTag)
+            return true
+        }
+        else return false
+    }
+    fun removeSubDocument(itemName: String, subDocument: Document ) : Boolean {
+        var item  = findItem(itemName)
+        if (item != null){
+            item.document.remove(subDocument)
+            return true
+        }
+        else return false
     }
 }

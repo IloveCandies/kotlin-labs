@@ -1,6 +1,4 @@
 package com.example.todo
-
-import ToDoItem
 import org.junit.jupiter.api.Assertions.*
 
 internal class ToDoTest {
@@ -12,7 +10,6 @@ internal class ToDoTest {
         toDo.addItem(testItem)
         toDo.addItem(ToDoItem("Погулять с собакой",Status.DONE))
         assertTrue(toDo.findItem("Помыть посуду")!! == testItem,"err_add")
-
     }
 
     @org.junit.jupiter.api.Test
