@@ -11,10 +11,11 @@ open class ToDoApplication:CommandLineRunner {
 
     override fun run(vararg args: String?) {
         logger.info("EXECUTING: cmd runner")
-        var toDo: ToDo = ToDo()
+        val toDo: ToDo = ToDo()
 
         while(true){
-            println("Введите команду из списка: addItem,addTag,deleteItem,deleteTag,printToConsole,exit")
+            println("Введите команду из списка: addItem,addTag,printToConsole \n" +
+                    "addSubItem, addItemTag, addItemDoc, exit")
             when(readLine()!!.toString()){
                 "addItem" -> {
                     println("Введите описание")
@@ -23,6 +24,21 @@ open class ToDoApplication:CommandLineRunner {
                 "addTag" -> {
                     println("Введите описание")
                     toDo.addTag(Tag(readLine()!!.toString()))
+                }
+                "addSubItem" -> {
+                    println("Введите описание элемента для добавления")
+                    println("Введите описание элемента в который нужно добавить новый")
+                    toDo.addSubItem(readLine()!!.toString(),readLine()!!.toString())
+                }
+                "addItemTag" -> {
+                    println("Введите описание элемента для добавления")
+                    println("Введите описание элемента в который нужно добавить новый")
+                    toDo.addItemTag(readLine()!!.toString(),readLine()!!.toString())
+                }
+                "addItemDoc" -> {
+                    println("Введите описание элемента для добавления")
+                    println("Введите описание элемента в который нужно добавить новый")
+                    toDo.addItemDocument(readLine()!!.toString(),readLine()!!.toString())
                 }
                 "printToConsole" -> {
                     toDo.printToConsole()

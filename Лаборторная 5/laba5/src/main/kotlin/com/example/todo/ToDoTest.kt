@@ -6,7 +6,7 @@ internal class ToDoTest {
     var toDo: ToDo = ToDo()
     @org.junit.jupiter.api.Test
     fun addItem() {
-        var testItem =ToDoItem("Помыть посуду")
+        val testItem =ToDoItem("Помыть посуду")
         toDo.addItem(testItem)
         toDo.addItem(ToDoItem("Погулять с собакой",Status.DONE))
         assertTrue(toDo.findItem("Помыть посуду")!! == testItem,"err_add")
@@ -14,7 +14,7 @@ internal class ToDoTest {
 
     @org.junit.jupiter.api.Test
     fun deleteItem() {
-        var testItem =ToDoItem("Помыть посуду")
+        val testItem =ToDoItem("Помыть посуду")
         toDo.addItem(testItem)
         toDo.deleteItem("Помыть посуду")
         assertTrue(toDo.findItem("Помыть посуду") == null,"err_del")
@@ -45,14 +45,14 @@ internal class ToDoTest {
 
     @org.junit.jupiter.api.Test
     fun findItem() {
-        var testItem =ToDoItem("Помыть посуду")
+        val testItem =ToDoItem("Помыть посуду")
         toDo.addItem(testItem)
         assertTrue(toDo.findItem("Помыть посуду")!! == testItem,"err_find")
     }
 
     @org.junit.jupiter.api.Test
     fun changeItemStatus() {
-        var testItem =ToDoItem("Помыть посуду")
+        val testItem =ToDoItem("Помыть посуду")
         toDo.addItem(testItem)
         toDo.changeItemStatus("Помыть посуду",Status.DONE)
         assertTrue(toDo.findItem("Помыть посуду")!!.status.equals(Status.DONE),"err_change_st")
@@ -60,7 +60,7 @@ internal class ToDoTest {
 
     @org.junit.jupiter.api.Test
     fun changeItemDescription() {
-        var testItem =ToDoItem("Помыть посуду")
+        val testItem =ToDoItem("Помыть посуду")
         toDo.addItem(testItem)
         toDo.changeItemDescription("Помыть посуду","Протестировать",Status.ACTIVE)
         assertTrue(toDo.findItem("Протестировать")!!.description.equals("Протестировать"),"err_change_des")
@@ -74,24 +74,79 @@ internal class ToDoTest {
 
     @org.junit.jupiter.api.Test
     fun addTag() {
-        var testTag = Tag("дом")
+        val testTag = Tag("дом")
         toDo.addTag(testTag)
         assertTrue(toDo.findTag("дом") == testTag,"err_add_tg")
     }
 
     @org.junit.jupiter.api.Test
     fun findTag() {
-        var testTag = Tag("дом")
+        val testTag = Tag("дом")
         toDo.addTag(testTag)
         assertTrue(toDo.findTag("дом") == testTag,"err_find_tg")
     }
 
     @org.junit.jupiter.api.Test
     fun deleteTag() {
-        var testTag = Tag("дом")
+        val testTag = Tag("дом")
         toDo.addTag(testTag)
         assertTrue(toDo.findTag("дом") == testTag,"err_add_tg")
         toDo.deleteTag("дом")
         assertFalse(toDo.findTag("дом") == testTag,"err_del_tg")
+    }
+
+    @org.junit.jupiter.api.Test
+    fun addSubItem(){
+        val item = ToDoItem("test")
+        val subItem = "subitem"
+        toDo.addItem(item)
+        toDo.addSubItem("test",subItem)
+        assertTrue(toDo.findItem("test")!!.subItemList.isNotEmpty())
+    }
+    @org.junit.jupiter.api.Test
+    fun deleteSubItem(){
+        val item = ToDoItem("test")
+        val subItem = "subitem"
+        toDo.addItem(item)
+        toDo.addSubItem("test",subItem)
+        assertTrue(toDo.findItem("test")!!.subItemList.contains(ToDoItem(subItem)))
+        toDo.removeSubItem("test",subItem)
+        assertTrue(toDo.findItem("test")!!.subItemList.isEmpty())
+    }
+    @org.junit.jupiter.api.Test
+    fun addItemTag(){
+        val item = ToDoItem("test")
+        val tag = "tag"
+        toDo.addItem(item)
+        toDo.addItemTag("test",tag)
+        assertTrue(toDo.findItem("test")!!.tagList.isNotEmpty())
+    }
+    @org.junit.jupiter.api.Test
+    fun deleteItemTag(){
+        val item = ToDoItem("test")
+        val tag = "tag"
+        toDo.addItem(item)
+        toDo.addItemTag("test",tag)
+        assertTrue(toDo.findItem("test")!!.tagList.contains(Tag(tag)))
+        toDo.removeItemTag("test",tag)
+        assertTrue(toDo.findItem("test")!!.tagList.isEmpty())
+    }
+    @org.junit.jupiter.api.Test
+    fun addItemDocument(){
+        val item = ToDoItem("test")
+        val doc = "doc"
+        toDo.addItem(item)
+        toDo.addItemDocument("test",doc)
+        assertTrue(toDo.findItem("test")!!.documentList.isNotEmpty())
+    }
+    @org.junit.jupiter.api.Test
+    fun deleteItemDocument(){
+        val item = ToDoItem("test")
+        val doc = "doc"
+        toDo.addItem(item)
+        toDo.addItemDocument("test",doc)
+        assertTrue(toDo.findItem("test")!!.documentList.contains(Document(doc)))
+        toDo.removeItemDocument("test",doc)
+        assertTrue(toDo.findItem("test")!!.documentList.isEmpty())
     }
 }

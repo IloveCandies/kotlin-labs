@@ -1,15 +1,20 @@
 package com.example.todo
+class ToDo (private val toDoList: MutableList<ToDoItem> = mutableListOf(), private val tagList: MutableList<Tag> = mutableListOf()){
 
-
-class ToDo (private var toDoList: MutableList<ToDoItem> = mutableListOf(), private var tagList: MutableList<Tag> = mutableListOf()){
     fun addItem(item: ToDoItem): Boolean = toDoList.add(item)
+
     fun deleteItem(description: String):Boolean=toDoList.removeIf { it.description.equals(description) }
+
     fun deleteActiveItems(): Boolean = toDoList.removeIf { it.status.equals(Status.ACTIVE) }
+
     fun deleteDoneItems(): Boolean = toDoList.removeIf { it.status.equals(Status.DONE) }
+
     fun deleteAllItems() = toDoList.clear()
+
     fun findItem(description: String): ToDoItem? = toDoList.find{it.description.equals(description)}
+
     fun changeItemStatus(description: String, newStatus: Status): Boolean {
-        var item = findItem(description)
+        val item = findItem(description)
         if (item != null) {
             toDoList.set(toDoList.indexOf(item),ToDoItem(item.description,newStatus))
             return true
@@ -17,8 +22,9 @@ class ToDo (private var toDoList: MutableList<ToDoItem> = mutableListOf(), priva
         else
             return false
     }
+
     fun changeItemDescription(oldDescription: String, newDescription: String, newStatus: Status): Boolean {
-        var item = findItem(oldDescription)
+        val item = findItem(oldDescription)
         if (item != null) {
             toDoList.set(toDoList.indexOf(item),ToDoItem(newDescription,newStatus))
             return true
@@ -26,11 +32,13 @@ class ToDo (private var toDoList: MutableList<ToDoItem> = mutableListOf(), priva
         else
             return false
     }
+
     fun sortByStatus(status: Status): List<ToDoItem> = when(status){
         Status.ACTIVE -> toDoList.filter {it.status.equals(Status.ACTIVE)}
         Status.DONE -> toDoList.filter {it.status.equals(Status.DONE)}
         else -> toDoList
     }
+
     fun printToConsole(){
         for (item in toDoList){
             println(item.toString())
@@ -40,59 +48,74 @@ class ToDo (private var toDoList: MutableList<ToDoItem> = mutableListOf(), priva
         }
     }
     fun addTag(tag: Tag): Boolean = tagList.add(tag)
+
     fun findTag(tagName: String): Tag? = tagList.find{it.name.equals(tagName)}
+
     fun deleteTag(tagName: String):Boolean {
-        var tag = findTag(tagName)
+        val tag = findTag(tagName)
         if (tag != null){
             tagList.remove(tag)
             return true
         }
         else  return false
     }
-    fun addSubItem(itemDescription: String, subItem: ToDoItem) : Boolean {
-        var item  = findItem(itemDescription)
+    //Вопрос, а как лучше реализовывать добавление - получать строку и создавать новый элемент,
+    // или срезу передавать элемент ToDoItem, а реализацию отдавать на ToDoApplication?
+    fun addSubItem(itemDescription: String, subItemDescription: String) : Boolean {
+        val item  = findItem(itemDescription)
+        val subItem = ToDoItem(subItemDescription)
         if (item != null){
-            item.subItem.add(subItem)
+            item.subItemList.add(subItem)
             return true
         }
         else return false
     }
-    fun addSubTag(itemName: String, subTag: Tag) : Boolean {
-        var item  = findItem(itemName)
+
+    fun addItemTag(itemName: String, tagDescription: String) : Boolean {
+        val item  = findItem(itemName)
+        val tag = Tag(tagDescription)
         if (item != null){
-            item.tag.add(subTag)
+            item.tagList.add(tag)
             return true
         }
         else return false
     }
-    fun addSubDocument(itemName: String, subDocument: Document ) : Boolean {
-        var item  = findItem(itemName)
+
+    fun addItemDocument(itemName: String, documentTitle: String ) : Boolean {
+        val item  = findItem(itemName)
+        val doc = Document(documentTitle)
         if (item != null){
-            item.document.add(subDocument)
+            item.documentList.add(doc)
             return true
         }
         else return false
     }
-    fun removeSubItem(itemDescription: String, subItem: ToDoItem) : Boolean {
-        var item  = findItem(itemDescription)
+
+    fun removeSubItem(itemDescription: String, subItemDescription: String) : Boolean {
+        val item  = findItem(itemDescription)
+        val subItem = ToDoItem(subItemDescription)
         if (item != null){
-            item.subItem.remove(subItem)
+            item.subItemList.remove(subItem)
             return true
         }
         else return false
     }
-    fun removeSubTag(itemName: String, subTag: Tag) : Boolean {
-        var item  = findItem(itemName)
+
+    fun removeItemTag(itemName: String, tagDescription: String) : Boolean {
+        val item  = findItem(itemName)
+        val tag = Tag(tagDescription)
         if (item != null){
-            item.tag.remove(subTag)
+            item.tagList.remove(tag)
             return true
         }
         else return false
     }
-    fun removeSubDocument(itemName: String, subDocument: Document ) : Boolean {
-        var item  = findItem(itemName)
+
+    fun removeItemDocument(itemName: String, documentTitle: String  ) : Boolean {
+        val item  = findItem(itemName)
+        val doc = Document(documentTitle)
         if (item != null){
-            item.document.remove(subDocument)
+            item.documentList.remove(doc)
             return true
         }
         else return false
